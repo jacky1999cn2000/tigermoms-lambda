@@ -69,11 +69,12 @@ lambda-local -l index.js -h handler -e mock/event.js
   ```
 * Mapping lambda function's returned value to final response (including error message)
   * [Error handling in AWS API Gateway with Lambda](https://medium.com/@pahud/error-handling-in-aws-api-gateway-with-lambda-28fb86b3ea1e#.ti6kotqcr)
-  * For each method, go to `Method Response`, and add a response, e.g. 400; go to `Integration Response`, add an integration response, copy & paste the following content to `Lambda Error Regex` (this is because we stringified error message, which contains `status:error`), finally click `Body Mapping Templates`, and copy & paste the following content to the text field. *for every `context.fail([stringified error])` call, the stringified error will be put as a value for a key called errorMessage; that's why we use `$input.path("$.errorMessage")` to retrieve the entire stringified error, convert it back to json (.path), assign it to `$inputRoot`, and return it)*
-
+  * For each method, go to `Method Response`, and add a response, e.g. 400; go to `Integration Response`, add an integration response, copy & paste the following content to `Lambda Error Regex` (this is because we stringified error message, which contains `status:error`)
   ```javascript
   .*status.*error.*
   ```
+  * Finally click `Body Mapping Templates`, and copy & paste the following content to the text field. (*for every `context.fail([stringified error])` call, the stringified error will be put as a value for a key called errorMessage; that's why we use `$input.path("$.errorMessage")` to retrieve the entire stringified error, convert it back to json (.path), assign it to `$inputRoot`, and return it)*)
+
   ```javascript
   #set($inputRoot = $input.path("$.errorMessage"))
   $inputRoot
