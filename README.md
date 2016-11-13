@@ -54,6 +54,7 @@ If result.status is 'error', then use JSON.stringify, since in API GATEWAY we us
 API-Gateway allow us to enable CORS easily for resource/method via a button, however, that button only add `Access-Control-Allow-Origin` header for 200 response, in other words, your request (from browser) can only be successful if the status code is 200.
 
 The solution is simple:
+
 1. select a method, and in "Method Response", find the non-200 http status you created (e.g. 400), and click "Add Header", and add `Access-Control-Allow-Origin`;
 
 ![1](./1.png)
