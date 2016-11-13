@@ -49,20 +49,6 @@ If result.status is 'error', then use JSON.stringify, since in API GATEWAY we us
     context.succeed(result);
   }
 ```
-* CORS
-
-API-Gateway allow us to enable CORS easily for resource/method via a button, however, that button only add `Access-Control-Allow-Origin` header for 200 response, in other words, your request (from browser) can only be successful if the status code is 200.
-
-The solution is simple:
-
-1. select a method, and in "Method Response", find the non-200 http status you created (e.g. 400), and click "Add Header", and add `Access-Control-Allow-Origin`;
-
-![1](./1.png)
-
-2. go to "Integration Response", and choose the response you added (e.g. 400), and modify the "Mapping value" to "\*".
-
-![2](./2.png)
-
 
 * Mapping request information to event object
   * [How to create a Request object for your Lambda event from API Gateway](http://kennbrodhagen.net/2015/12/06/how-to-create-a-request-object-for-your-lambda-event-from-api-gateway/)
@@ -106,3 +92,17 @@ The solution is simple:
   #set($inputRoot = $input.path("$.errorMessage"))
   $inputRoot
   ```
+
+* CORS (http://enable-cors.org/server_awsapigateway.html)
+
+  API-Gateway allow us to enable CORS easily for resource/method via a button, however, that button only add `Access-Control-Allow-Origin` header for 200 response, in other words, your request (from browser) can only be successful if the status code is 200.
+
+  The solution is simple:
+
+  * select a method, and in "Method Response", find the non-200 http status you created (e.g. 400), and click "Add Header", and add `Access-Control-Allow-Origin`;
+
+  ![1](./1.png)
+
+  * go to "Integration Response", and choose the response you added (e.g. 400), and modify the "Mapping value" to "\*".
+
+  ![2](./2.png)
